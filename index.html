@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>保險業定聯管理系統</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>保險業定聯管理系統</h1>
+    <nav>
+      <button onclick="showPage('clients')">客戶管理</button>
+      <button onclick="showPage('schedule')">每月行程</button>
+      <!-- 新增數據分析頁面的導覽按鈕 -->
+      <button onclick="showPage('analysis')">數據分析</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Client Management Page -->
+    <section id="clients" class="view active">
+      <h2>客戶管理</h2>
+      <p>管理您的客戶資料與聯絡資訊。</p>
+      <button id="add-client-btn">新增客戶</button>
+      <table id="client-table">
+        <thead>
+          <tr>
+            <th>姓名</th>
+            <th>電話</th>
+            <th>客戶分級</th>
+            <th>地址</th>
+            <th>上次聯絡</th>
+            <th>下次聯絡</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 客戶資料由 JavaScript 產生 -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Monthly Schedule Page -->
+    <section id="schedule" class="view">
+      <h2>每月預排行程</h2>
+      <p>選擇月份查看當月的預約拜訪，並可為客戶安排新的拜訪。</p>
+      <label for="schedule-month">選擇月份：</label>
+      <input type="month" id="schedule-month" value="">
+      <div id="monthly-schedule">
+        <!-- 月預排行程資料由 JavaScript 產生 -->
+      </div>
+    </section>
+
+    <!-- Analysis Page -->
+    <section id="analysis" class="view">
+      <h2>數據分析</h2>
+      <p>查看客戶數據統計與提醒。</p>
+      <!-- 統計卡片區塊 -->
+      <div id="stats-cards" class="stats-cards">
+        <div class="card" id="total-clients-card">
+          <h3>客戶總數</h3>
+          <p id="total-clients">0</p>
+        </div>
+        <div class="card" id="monthly-contact-card">
+          <h3>本月聯絡</h3>
+          <p id="monthly-contact">0</p>
+        </div>
+        <div class="card" id="pending-clients-card">
+          <h3>待聯繫客戶</h3>
+          <p id="pending-clients">0</p>
+        </div>
+        <div class="card" id="expiring-policy-card">
+          <h3>保險到期提醒</h3>
+          <p id="expiring-policy">0</p>
+        </div>
+      </div>
+      <!-- 圖表區塊 -->
+      <div class="charts">
+        <div class="chart-container">
+          <h3>客戶分級分佈</h3>
+          <canvas id="grade-chart" width="300" height="200"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>聯絡方式統計</h3>
+          <canvas id="contact-chart" width="300" height="200"></canvas>
+        </div>
+      </div>
+      <!-- 清單區塊 -->
+      <div class="lists">
+        <div class="list-container">
+          <h3>待聯絡客戶清單</h3>
+          <ul id="pending-clients-list"></ul>
+        </div>
+        <div class="list-container">
+          <h3>保險到期提醒</h3>
+          <ul id="expiring-policy-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add/Edit Client Modal -->
+    <div id="client-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3 id="modal-title">新增客戶</h3>
+        <form id="client-form">
+          <input type="hidden" id="client-id" />
+          <label for="client-name">姓名：</label>
+          <input type="text" id="client-name" required />
+          <label for="client-phone">電話：</label>
+          <input type="tel" id="client-phone" required />
+          <label for="client-grade">客戶分級：</label>
+          <select id="client-grade">
+            <option value="A級">A級</option>
+            <option value="B級">B級</option>
+            <option value="C級">C級</option>
+            <option value="D級">D級</option>
+          </select>
+          <label for="client-address">地址：</label>
+          <input type="text" id="client-address" required />
+          <!-- 新增聯絡方式欄位 -->
+          <label for="client-contact-method">聯絡方式：</label>
+          <select id="client-contact-method">
+            <option value="電話">電話</option>
+            <option value="訊息">訊息</option>
+          </select>
+          <label for="client-last-contact">上次聯絡日期：</label>
+          <input type="date" id="client-last-contact" />
+          <label for="client-next-contact">下次聯絡日期：</label>
+          <input type="date" id="client-next-contact" />
+          <!-- 新增保單到期日期欄位 -->
+          <label for="client-policy-expiry">保單到期日期：</label>
+          <input type="date" id="client-policy-expiry" />
+
+          <!-- 新增車險到期日欄位 -->
+          <label for="client-car-insurance-expiry">車險到期日：</label>
+          <input type="date" id="client-car-insurance-expiry" />
+          <div class="modal-actions">
+            <button type="submit">儲存</button>
+            <button type="button" onclick="closeClientModal()">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 定聯管理系統</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
